@@ -1,0 +1,32 @@
+{
+  "name": "order-manager",
+  "entrypoint": "gateway",
+  "services": [
+    {
+      "id": "gateway",
+      "name": "api-gateway",
+      "path": "./gateway",
+      "type": "node",
+      "port": 3000,
+      "command": "npm run dev"
+    }
+  ],
+  "web": [
+    {
+      "id": "components",
+      "name": "components-storybook",
+      "path": "./frontend/components",
+      "type": "node",
+      "port": 6006,
+      "command": "npm run storybook"
+    }
+  ],
+  "watch": {
+    "enabled": true,
+    "paths": [
+      "./gateway",
+      "./frontend/components/src",
+      "./shared"
+    ]
+  }
+}
