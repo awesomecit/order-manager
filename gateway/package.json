@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "tsx app.ts",
-    "dev": "tsx --watch app.ts"
+    "start": "node dist/app.js",
+    "dev": "tsx --watch app.ts",
+    "build": "tsc"
   },
   "dependencies": {
     "@fastify/cors": "^8.4.2",

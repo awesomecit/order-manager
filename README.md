@@ -28,9 +28,16 @@ npm run dev
 ```
 
 **Access Points**:
+
+**Development**:
 - 🚪 **Gateway API**: http://localhost:3000
 - 📚 **Components** (coming soon): http://localhost:6006
 - 🔍 **Health Check**: http://localhost:3000/health
+
+**Production** (tech-citizen.me):
+- 🌐 **Live Demo**: https://tech-citizen.me (work in progress)
+- 🚀 **API**: https://api.order-manager.tech-citizen.me (planned)
+- 📱 **App**: https://app.order-manager.tech-citizen.me (planned)
 
 ---
 
@@ -433,7 +440,48 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-## 📞 Support
+## � Production Deployment
+
+### Directory Structure (Recommended: /opt)
+```
+/opt/order-manager/
+├── docker-compose.yml          # Multi-service orchestration
+├── nginx/                      # Reverse proxy configuration
+│   ├── nginx.conf
+│   └── ssl/                    # Let's Encrypt certificates
+├── data/                       # Persistent data
+│   ├── postgres/
+│   ├── redis/
+│   └── uploads/
+├── logs/                       # Application logs
+└── backups/                    # Database backups
+```
+
+### Environment Setup
+```bash
+# Create deployment directory
+sudo mkdir -p /opt/order-manager
+sudo chown $USER:$USER /opt/order-manager
+
+# Clone repository
+cd /opt/order-manager
+git clone <repository-url> .
+
+# Setup production environment
+cp .env.example .env.production
+# Edit .env.production with production values
+
+# Deploy with Docker Compose
+docker-compose -f docker-compose.production.yml up -d
+```
+
+### Domain Configuration
+- **Primary**: `tech-citizen.me`
+- **API**: `api.order-manager.tech-citizen.me`
+- **App**: `app.order-manager.tech-citizen.me`
+- **Dev**: `dev.order-manager.tech-citizen.me`
+
+## �📞 Support
 
 - 🐛 **Issues**: [GitHub Issues](../../issues)
 - 💬 **Discussions**: [GitHub Discussions](../../discussions)
