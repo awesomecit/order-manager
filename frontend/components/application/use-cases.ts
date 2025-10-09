@@ -56,8 +56,11 @@ export class SignupUseCase {
         confirmPassword: string,
         acceptedTerms: boolean
     ): Promise<Result<AuthResult>> {
+        console.log('[SignupUseCase.execute] Starting with:', { name, email, acceptedTerms });
+
         // 1. Verifica accettazione termini
         if (!acceptedTerms) {
+            console.log('[SignupUseCase.execute] Terms not accepted');
             return Result.fail('Devi accettare i termini e condizioni')
         }
 
@@ -65,18 +68,28 @@ export class SignupUseCase {
         const userResult = User.create(name, email, password, confirmPassword)
         
         if (userResult.isFailure) {
+            console.log('[SignupUseCase.execute] Validation failed:', userResult.getError());
             return Result.fail(userResult.getError())
         }
 
         const user = userResult.getValue()
+        console.log('[SignupUseCase.execute] User validated, calling auth service');
 
         // 3. Chiamata al servizio
         try {
             const authResult = await this.authService.signup(user)
             
+            console.log('[SignupUseCase.execute] Auth service response:', authResult);
+            
             if (!authResult.success) {
+                console.log('[SignupUseCase.execute] Signup failed:', authResult.error);
                 return Result.fail(authResult.error || 'Registrazione fallita')
             }
+
+            console.log('[SignupUseCase.execute] Signup successful, returning:', {
+                hasUser: !!authResult.user,
+                hasToken: !!authResult.token
+            });
 
             return Result.ok(authResult)
         } catch (error: any) {

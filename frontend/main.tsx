@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import LoginComponent from './components/login-component'
+import App from './App'
 import './index.css'
 import './i18n' // Inizializza i18n
 
@@ -18,7 +18,7 @@ async function enableMocking() {
 enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-      <LoginComponent />
+      <App />
     </React.StrictMode>,
   )
 })

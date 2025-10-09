@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { useAuth } from './presentation/hooks/useAuth';
-
 import { LoginUseCase, SignupUseCase, OAuthLoginUseCase } from './application/use-cases';
 import { AuthService } from './infrastructure/auth-service';
 import { HttpClient } from './infrastructure/http-client';
@@ -585,9 +585,9 @@ const RegisterComponent: React.FC = () => {
             <span className="text-base-content/70">
               {t('auth.signup.hasAccount')}{' '}
             </span>
-            <a href="/login" className="link link-primary">
+            <Link to="/login" className="link link-primary">
               {t('auth.signup.loginLink')}
-            </a>
+            </Link>
           </div>
         </div>
       </div>

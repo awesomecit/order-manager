@@ -64,8 +64,11 @@ export const authHandlers = [
 
     await delay(700)
 
+    console.log('[MSW Handler] Signup request:', { email: body.email, name: body.name });
+
     // Simula email già esistente
-    if (body.email === 'admin@example.com' || body.email === 'user@example.com') {
+    if (body.email === 'admin@example.com' || body.email === 'user@example.com' || body.email === 'existing@example.com') {
+      console.log('[MSW Handler] Email already exists:', body.email);
       return HttpResponse.json({
         success: false,
         error: 'Email già registrata',
@@ -73,17 +76,26 @@ export const authHandlers = [
       }, { status: 409 })
     }
 
-    // Registrazione riuscita
+    // Simula errore di rete se email contiene "network-error"
+    if (body.email.includes('network-error')) {
+      console.log('[MSW Handler] Simulating network error');
+      return HttpResponse.error();
+    }
+
+    // Registrazione riuscita - ritorna token E user
+    console.log('[MSW Handler] Signup successful');
     return HttpResponse.json({
       success: true,
       data: {
-        message: 'Registrazione completata con successo',
+        token: `mock-jwt-token-${body.email.split('@')[0]}`,
+        refreshToken: `mock-refresh-token-${body.email.split('@')[0]}`,
         user: {
-          id: '3',
-          email: body.email,
+          id: Math.random().toString(36).substr(2, 9),
+          email: body.email.toLowerCase(),
           name: body.name,
           role: 'USER'
-        }
+        },
+        message: 'Registrazione completata con successo'
       }
     }, { status: 201 })
   }),

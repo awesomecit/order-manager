@@ -1,1 +1,98 @@
-{}
+{
+    "auth": {
+        "login": {
+            "title": "Login",
+            "email": "Email",
+            "emailPlaceholder": "email@example.com",
+            "password": "Password",
+            "passwordPlaceholder": "••••••••",
+            "rememberMe": "Remember me",
+            "forgotPassword": "Forgot password?",
+            "submit": "Sign In",
+            "loading": "Loading...",
+            "noAccount": "Don't have an account?",
+            "signupLink": "Sign up"
+        },
+        "signup": {
+            "title": "Sign Up",
+            "firstName": "First Name",
+            "firstNamePlaceholder": "John",
+            "lastName": "Last Name",
+            "lastNamePlaceholder": "Doe",
+            "email": "Email",
+            "emailPlaceholder": "email@example.com",
+            "password": "Password",
+            "passwordPlaceholder": "••••••••",
+            "confirmPassword": "Confirm Password",
+            "confirmPasswordPlaceholder": "••••••••",
+            "acceptTerms": "I accept the",
+            "termsLink": "terms and conditions",
+            "privacyPolicy": "I accept the",
+            "privacyLink": "privacy policy",
+            "submit": "Sign Up",
+            "loading": "Loading...",
+            "hasAccount": "Already have an account?",
+            "loginLink": "Login"
+        },
+        "oauth": {
+            "divider": "OR",
+            "google": "Continue with Google",
+            "github": "Continue with GitHub"
+        },
+        "verification": {
+            "title": "Email Verification",
+            "requestCodeDescription": "Enter your email address to receive a verification code",
+            "enterCodeDescription": "We sent a 6-digit code to {{email}}",
+            "email": "Email Address",
+            "emailPlaceholder": "your@email.com",
+            "sendCode": "Send Verification Code",
+            "verifyCode": "Verify Email",
+            "resendCode": "Resend Code",
+            "codeSent": "Verification code sent to your email",
+            "codeResent": "New verification code sent",
+            "emailVerified": "Email verified successfully!",
+            "codeExpires": "Code expires in",
+            "invalidCode": "Invalid verification code",
+            "codeExpiredOrInvalid": "Code expired or invalid. Please request a new code."
+        },
+        "messages": {
+            "loginSuccess": "Login successful!",
+            "signupSuccess": "Registration completed! Please sign in.",
+            "invalidCredentials": "Invalid email or password",
+            "emailRequired": "Email is required",
+            "passwordRequired": "Password is required",
+            "nameRequired": "Full name is required",
+            "emailInvalid": "Please enter a valid email address",
+            "passwordTooShort": "Password must be at least 8 characters",
+            "passwordsNotMatch": "Passwords do not match",
+            "termsRequired": "You must accept the terms and conditions",
+            "emailAlreadyExists": "This email address is already in use",
+            "serverError": "An unexpected error occurred. Please try again.",
+            "networkError": "Network error. Please check your connection."
+        },
+        "validation": {
+            "emailInvalid": "Invalid email format",
+            "emailRequired": "Email is required",
+            "passwordRequired": "Password is required",
+            "passwordTooShort": "Password must be at least 8 characters",
+            "passwordRequirements": "Password must contain uppercase, lowercase, number and special character",
+            "passwordMismatch": "Passwords do not match",
+            "passwordWeak": "Weak password",
+            "passwordMedium": "Medium password",
+            "passwordStrong": "Strong password",
+            "termsRequired": "You must accept the terms and conditions",
+            "nameRequired": "Name is required",
+            "nameTooShort": "Name must be at least 2 characters",
+            "nameInvalid": "Name contains invalid characters"
+        }
+    },
+    "common": {
+        "required": "*",
+        "optional": "(optional)",
+        "loading": "Loading...",
+        "save": "Save",
+        "cancel": "Cancel",
+        "or": "or",
+        "back": "Back"
+    }
+}

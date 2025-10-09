@@ -16,10 +16,12 @@ export class Email {
             return Result.fail('Email è obbligatoria')
         }
 
-        // RFC 5322 Email Validation
-        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+        // RFC 5322 Email Validation (stricter - no #$% allowed)
+        // Allows: letters, numbers, dot, plus, hyphen, underscore
+        const emailRegex = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
         
         if (!emailRegex.test(email)) {
+            console.log('[Email.create] Invalid email format:', email);
             return Result.fail('Formato email non valido')
         }
 
@@ -47,7 +49,13 @@ export class Password {
     }
 
     static create(password: string): Result<Password> {
-        if (!password || password.length < 8) {
+        if (!password || password.length === 0) {
+            console.log('[Password.create] Empty password');
+            return Result.fail('Password obbligatoria')
+        }
+
+        if (password.length < 8) {
+            console.log('[Password.create] Password too short:', password.length);
             return Result.fail('La password deve contenere almeno 8 caratteri')
         }
 
@@ -58,15 +66,22 @@ export class Password {
         const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password)
 
         if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecialChar) {
+            console.log('[Password.create] Missing complexity:', {hasUpperCase, hasLowerCase, hasNumbers, hasSpecialChar});
             return Result.fail(
                 'La password deve contenere maiuscole, minuscole, numeri e caratteri speciali'
             )
         }
 
-        // Controlla password comuni (top 10k passwords)
-        const commonPasswords = ['password', '12345678', 'qwerty', 'abc123', 'password1']
-        if (commonPasswords.includes(password.toLowerCase())) {
-            return Result.fail('Password troppo comune, scegline una più sicura')
+        // Controlla password comuni (top 10k passwords) - case-insensitive check
+        const commonPasswords = ['password', '12345678', 'qwerty', 'abc123', 'password1', 'letmein', 'welcome', 'monkey']
+        const passwordLower = password.toLowerCase()
+        
+        // Check if password contains common words
+        for (const common of commonPasswords) {
+            if (passwordLower.includes(common)) {
+                console.log('[Password.create] Blacklisted password contains:', common);
+                return Result.fail('Password troppo comune, scegline una più sicura')
+            }
         }
 
         return Result.ok(new Password(password))
@@ -96,18 +111,26 @@ export class Name {
             return Result.fail('Il nome è obbligatorio')
         }
 
-        if (name.trim().length < 2) {
+        const trimmed = name.trim()
+
+        if (trimmed.length < 2) {
             return Result.fail('Il nome deve contenere almeno 2 caratteri')
         }
 
-        if (name.length > 100) {
-            return Result.fail('Il nome non può superare 100 caratteri')
+        if (trimmed.length > 50) {
+            console.log('[Name.create] Name too long:', trimmed.length);
+            return Result.fail('Il nome non può superare 50 caratteri')
         }
 
-        // Sanitize input (XSS prevention)
-        const sanitized = name.trim().replace(/[<>]/g, '')
+        // Validate only letters, spaces, hyphens, apostrophes, and accented characters
+        // No numbers or special characters (except ' and -)
+        const validNameRegex = /^[a-zA-ZÀ-ÿ\s'-]+$/
+        if (!validNameRegex.test(trimmed)) {
+            console.log('[Name.create] Invalid characters in name:', trimmed);
+            return Result.fail('Il nome non è valido (solo lettere, spazi, apostrofi e trattini)')
+        }
 
-        return Result.ok(new Name(sanitized))
+        return Result.ok(new Name(trimmed))
     }
 
     getValue(): string {

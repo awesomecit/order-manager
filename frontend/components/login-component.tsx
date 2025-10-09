@@ -1,9 +1,11 @@
 // Presentation Layer - Login Component (Refactored with i18n)
 // Segue principi SOLID, DDD, Clean Architecture
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAuth, useFormValidation } from './presentation/hooks/useAuth'
+import { Link } from 'react-router-dom'
+import { useAuth } from './presentation/hooks/useAuth'
+import { useFormValidation } from './presentation/hooks/useAuth'
 import { LoginUseCase, SignupUseCase, OAuthLoginUseCase } from './application/use-cases'
 import { AuthService } from './infrastructure/auth-service'
 import { HttpClient } from './infrastructure/http-client'
@@ -349,15 +351,21 @@ export default function LoginComponent() {
                     {/* Toggle login/signup */}
                     <div className="text-center mt-4">
                         <p className="text-sm">
-                            {isLogin ? t('auth.login.noAccount') : t('auth.signup.hasAccount')}
-                            <button
-                                onClick={toggleMode}
-                                className="link link-primary ml-1"
-                                type="button"
-                                disabled={loading}
-                            >
-                                {isLogin ? t('auth.login.signupLink') : t('auth.signup.loginLink')}
-                            </button>
+                            {isLogin ? (
+                                <>
+                                    {t('auth.login.noAccount')}{' '}
+                                    <Link to="/register" className="link link-primary">
+                                        {t('auth.login.signupLink')}
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    {t('auth.signup.hasAccount')}{' '}
+                                    <Link to="/login" className="link link-primary">
+                                        {t('auth.signup.loginLink')}
+                                    </Link>
+                                </>
+                            )}
                         </p>
                     </div>
                 </div>

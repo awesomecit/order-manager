@@ -37,16 +37,41 @@ export class AuthService implements IAuthService {
     async signup(user: User): Promise<AuthResult> {
         try {
             const response = await this.httpClient.post<{
-                token: string
-                user: { id: string; email: string; name: string }
+                success: boolean
+                data?: {
+                    token: string
+                    user: { id: string; email: string; name: string }
+                }
+                error?: string
             }>(`${this.baseUrl}/auth/signup`, user.toJSON())
 
+            console.log('[AuthService.signup] Response:', response);
+
+            // Handle MSW response format: { success: true, data: { token, user } }
+            if (response.success && response.data) {
+                return {
+                    success: true,
+                    token: response.data.token,
+                    user: response.data.user
+                }
+            }
+
+            // Handle error response
             return {
-                success: true,
-                token: response.token,
-                user: response.user
+                success: false,
+                error: response.error || 'Errore durante la registrazione'
             }
         } catch (error: any) {
+            console.error('[AuthService.signup] Error:', error);
+            
+            // Handle network errors
+            if (error.message?.includes('Network') || error.message?.includes('fetch')) {
+                return {
+                    success: false,
+                    error: 'Errore di rete. Controlla la tua connessione.'
+                }
+            }
+            
             return {
                 success: false,
                 error: error.message || 'Errore durante la registrazione'
