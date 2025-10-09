@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 Starting ORDER MANAGER Development Environment..."
+echo "🚀 Starting APP Development Environment..."
 
 # Colors
 GREEN='\033[0;32m'

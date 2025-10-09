@@ -1,9 +1,0 @@
-{
-  "name": "@order-manager/dashboard",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "echo 'Dashboard not implemented yet'",
-    "build": "echo 'Dashboard not implemented yet'"
-  }
-}
