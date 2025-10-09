@@ -6,7 +6,7 @@ This is a multi-stack **order management system** using **Domain-Driven Design (
 
 **Tech Stack**:
 - **Backend**: NestJS microservices with TypeScript, PostgreSQL, Redis, RabbitMQ
-- **Frontend**: Lit Elements (components) + React (dashboard)
+- **Frontend**: React (all components and dashboard)
 - **Gateway**: Platformatic (Fastify) for service orchestration
 - **Orchestration**: Watt for multi-stack development
 - **Infrastructure**: Docker, Kubernetes, Terraform (AWS)
@@ -54,7 +54,7 @@ src/modules/[module-name]/
 **Multi-Stack Structure**:
 - `gateway/` - Platformatic proxy/load balancer
 - `services/` - NestJS microservices (auth, order, user, notification)
-- `frontend/components/` - Lit Elements library with Storybook
+- `frontend/components/` - React component library with Storybook
 - `frontend/dashboard/` - React admin interface
 - `shared/` - Common TypeScript types and utilities
 
@@ -138,7 +138,7 @@ watt start    # Starts all services via orchestration
 **Service-Specific**:
 ```bash
 npm run start:dev     # NestJS service development
-npm run storybook     # Lit components development  
+npm run storybook     # React components development  
 npm run test:watch    # TDD mode
 ```
 
@@ -176,26 +176,30 @@ npm run seed
 - **Constants**: UPPER_SNAKE_CASE (`MAX_RETRIES`)
 - **Interfaces**: PascalCase with `I` prefix (`IUserRepository`)
 
-## 🎨 Frontend Components (Lit)
+## 🎨 Frontend Components (React)
 
 **Component Structure**:
 ```typescript
-@customElement('login-component')
-export class LoginComponent extends LitElement {
-  @property() email = '';
-  @state() private isLoading = false;
+import { useState } from 'react';
+
+const LoginComponent = () => {
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   
-  render() {
-    return html`<!-- template -->`;
-  }
-}
+  return (
+    <div>{/* JSX template */}</div>
+  );
+};
+
+export default LoginComponent;
 ```
 
 **Always include**:
-- Storybook stories (`.stories.ts`)
+- Storybook stories (`.stories.tsx`)
 - MSW mock handlers for API calls
 - Accessibility attributes (ARIA)
 - Form validation with error states
+- TypeScript types for props and state
 
 ## 🔄 State Management
 

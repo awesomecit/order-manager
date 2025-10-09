@@ -2,7 +2,7 @@
 
 set -e
 
-echo "🚀 Setting up ORDER MANAGER - Task A: Environment Setup"
+echo "🚀 Setting up APP - Task A: Environment Setup"
 
 # Colors
 GREEN='\033[0;32m'

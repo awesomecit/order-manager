@@ -2,7 +2,7 @@
 
 ## 🎯 EXECUTIVE SUMMARY
 
-**Obiettivo**: Sviluppare un componente di login in Lit Element riutilizzabile per il progetto ORDER MANAGER, seguendo metodologie XP/TDD/BDD/DDD e standard enterprise.
+**Obiettivo**: Sviluppare un componente di login in React riutilizzabile per il progetto ORDER MANAGER, seguendo metodologie XP/TDD/BDD/DDD e standard enterprise.
 
 **Timeline**: Sprint 1-2 settimane (MVP + refinement)  
 **Team**: PM/PO/Tech Lead + 2 Junior Developers (Pair Programming)
@@ -44,10 +44,10 @@ TokenExpired
 ┌─────────────────────────────────────┐
 │           Presentation              │
 │  ┌─────────────────────────────────┐│
-│  │     LoginComponent (Lit)        ││
-│  │  - Template rendering           ││
+│  │     LoginComponent (React)      ││
+│  │  - JSX rendering                ││
 │  │  - Event handling               ││
-│  │  - State management             ││
+│  │  - State management (hooks)     ││
 │  └─────────────────────────────────┘│
 └─────────────────────────────────────┘
 ┌─────────────────────────────────────┐
@@ -221,20 +221,20 @@ Feature: User Login
 |--------|------|------|---------|
 | **Fetch API** | Native, no dependencies | Manual error handling | ✅ **RECOMMENDED** |
 | **Axios** | Rich features, interceptors | Bundle size, dependency | ❌ Overkill |
-| **Lit HTTP Client** | Framework integration | Limited adoption | ⚠️ Experimental |
+| **React Query** | Framework integration | Learning curve | ✅ **RECOMMENDED** |
 
-**Decision**: **Fetch API** con wrapper custom per error handling.
+**Decision**: **Fetch API** (or **Axios**) con wrapper custom per error handling.
 
 ### State Management Options
 
 | Pattern | Pros | Cons | Verdict |
 |---------|------|------|---------|
-| **Lit Reactive Properties** | Native, simple | Limited for complex state | ✅ **MVP** |
-| **Redux Toolkit** | Predictable, DevTools | Complex setup, boilerplate | ❌ Overkill |
-| **Zustand** | Simple, TypeScript | External dependency | ⚠️ Future |
-| **Custom State Machine** | Tailored, educational | Development time | ✅ **LEARNING** |
+| **React useState/useReducer** | Native, simple | Limited for complex state | ✅ **MVP** |
+| **Redux Toolkit** | Predictable, DevTools | Complex setup, boilerplate | ⚠️ Large apps |
+| **Zustand** | Simple, TypeScript | External dependency | ✅ **RECOMMENDED** |
+| **Context API** | Native, no deps | Prop drilling, re-renders | ✅ **ALTERNATIVE** |
 
-**Decision**: **Lit Reactive Properties** + **Simple State Machine** pattern.
+**Decision**: **React Hooks (useState)** + **Custom hooks** pattern per componenti riutilizzabili.
 
 ---
 
@@ -303,51 +303,38 @@ class LoginStateMachine {
 
 ### Component Structure
 ```typescript
-@customElement('login-component')
-class LoginComponent extends LitElement {
-  // Reactive Properties (State)
-  @state() private loginState: LoginState = {
-    isLoading: false,
-    email: '',
-    password: '',
-    rememberMe: false,
-    errors: {},
-    loginError: null
-  };
+const LoginComponent = () => {
+  // State Hooks
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<ValidationErrors>({});
 
-  // Injected Dependencies  
-  private authService: AuthService;
-  private validator: LoginValidator;
-
-  // Lifecycle
-  constructor() {
-    super();
-    this.authService = new AuthService();
-    this.validator = new LoginValidator();
-  }
+  // Injected Dependencies (or custom hooks)
+  const authService = useAuthService(); // Custom hook
+  const validator = useLoginValidator(); // Custom hook
 
   // Event Handlers
-  private handleEmailInput(e: InputEvent): void {
-    const email = (e.target as HTMLInputElement).value;
-    this.loginState = { 
-      ...this.loginState, 
-      email,
-      errors: { ...this.loginState.errors, email: null }
-    };
-    this.validateEmail(email);
-  }
+  const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+    setErrors({ ...errors, email: null });
+    validateEmail(newEmail);
+  };
 
-  private async handleSubmit(e: Event): Promise<void> {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!this.isFormValid()) return;
+    if (!isFormValid()) return;
     
-    this.setLoadingState(true);
+    setLoading(true);
     
     try {
-      const result = await this.authService.login({
-        email: this.loginState.email,
-        password: this.loginState.password,
+      const result = await authService.login({
+        email,
+        password,
         rememberMe: this.loginState.rememberMe
       });
       
@@ -687,8 +674,8 @@ class LoginError extends Error {
 
 ### Runtime Performance
 - Debounced validation (300ms)
-- Memoized validation results
-- Efficient re-rendering with Lit's reactive properties
+- Memoized validation results (useMemo, useCallback)
+- Efficient re-rendering with React's virtual DOM
 - Lazy loading of non-essential features
 
 ### Network Optimization
@@ -748,8 +735,8 @@ class LoginError extends Error {
 ## 📖 REFERENCES
 
 ### Technical Documentation
-- [Lit Element Official Docs](https://lit.dev/)
-- [Web Components Standards](https://www.webcomponents.org/)
+- [React Official Docs](https://react.dev/)
+- [React Hooks Guide](https://react.dev/reference/react)
 - [JWT Best Practices](https://tools.ietf.org/html/rfc7519)
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 
