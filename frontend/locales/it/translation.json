@@ -15,8 +15,10 @@
     },
     "signup": {
       "title": "Registrazione",
-      "name": "Nome completo",
-      "namePlaceholder": "Mario Rossi",
+      "firstName": "Nome",
+      "firstNamePlaceholder": "Mario",
+      "lastName": "Cognome",
+      "lastNamePlaceholder": "Rossi",
       "email": "Email",
       "emailPlaceholder": "email@example.com",
       "password": "Password",
@@ -25,10 +27,12 @@
       "confirmPasswordPlaceholder": "••••••••",
       "acceptTerms": "Accetto i",
       "termsLink": "termini e condizioni",
+      "privacyPolicy": "Accetto la",
+      "privacyLink": "privacy policy",
       "submit": "Registrati",
       "loading": "Caricamento...",
       "hasAccount": "Hai già un account?",
-      "loginLink": "Accedi"
+      "loginLink": "Login"
     },
     "oauth": {
       "divider": "OPPURE",
@@ -52,11 +56,16 @@
     },
     "validation": {
       "emailInvalid": "Formato email non valido",
-      "emailRequired": "L'email è obbligatoria",
-      "passwordRequired": "La password è obbligatoria",
+      "emailRequired": "Email obbligatoria",
+      "passwordRequired": "Password obbligatoria",
       "passwordTooShort": "La password deve contenere almeno 8 caratteri",
       "passwordRequirements": "La password deve contenere maiuscole, minuscole, numeri e caratteri speciali",
-      "nameRequired": "Il nome è obbligatorio",
+      "passwordMismatch": "Le password non corrispondono",
+      "passwordWeak": "Password debole",
+      "passwordMedium": "Password media",
+      "passwordStrong": "Password forte",
+      "termsRequired": "Devi accettare i termini e condizioni",
+      "nameRequired": "Nome obbligatorio",
       "nameTooShort": "Il nome deve contenere almeno 2 caratteri",
       "nameInvalid": "Il nome contiene caratteri non validi"
     }
@@ -65,13 +74,9 @@
     "required": "*",
     "optional": "(opzionale)",
     "loading": "Caricamento...",
-    "error": "Errore",
-    "success": "Successo",
-    "cancel": "Annulla",
-    "confirm": "Conferma",
     "save": "Salva",
-    "delete": "Elimina",
-    "edit": "Modifica",
-    "close": "Chiudi"
+    "cancel": "Annulla",
+    "or": "oppure",
+    "back": "Indietro"
   }
 }

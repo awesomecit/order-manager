@@ -28,8 +28,27 @@ export interface RefreshTokenResponse {
   accessToken: string
 }
 
+export interface SignupRequest {
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+  acceptTerms: boolean
+}
+
+export interface SignupResponse {
+  success: boolean
+  message: string
+  user?: {
+    id: string
+    email: string
+    firstName: string
+    lastName: string
+  }
+}
+
 export interface ApiError {
-  error: string
-  statusCode?: number
-  timestamp?: string
+  message: string
+  statusCode: number
+  error?: string
 }
