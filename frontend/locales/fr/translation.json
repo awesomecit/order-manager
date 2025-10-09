@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "email": "Email",
+      "emailPlaceholder": "email@example.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "••••••••",
+      "rememberMe": "Se souvenir de moi",
+      "forgotPassword": "Mot de passe oublié?",
+      "submit": "Se connecter",
+      "loading": "Chargement...",
+      "noAccount": "Vous n'avez pas de compte?",
+      "signupLink": "S'inscrire"
+    },
+    "signup": {
+      "title": "Inscription",
+      "name": "Nom complet",
+      "namePlaceholder": "Jean Dupont",
+      "email": "Email",
+      "emailPlaceholder": "email@example.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "••••••••",
+      "confirmPassword": "Confirmer le mot de passe",
+      "confirmPasswordPlaceholder": "••••••••",
+      "acceptTerms": "J'accepte les",
+      "termsLink": "termes et conditions",
+      "submit": "S'inscrire",
+      "loading": "Chargement...",
+      "hasAccount": "Vous avez déjà un compte?",
+      "loginLink": "Se connecter"
+    },
+    "oauth": {
+      "divider": "OU",
+      "google": "Continuer avec Google",
+      "github": "Continuer avec GitHub"
+    },
+    "messages": {
+      "loginSuccess": "Connexion réussie!",
+      "signupSuccess": "Inscription terminée! Veuillez vous connecter.",
+      "invalidCredentials": "Email ou mot de passe invalide",
+      "emailRequired": "L'email est obligatoire",
+      "passwordRequired": "Le mot de passe est obligatoire",
+      "nameRequired": "Le nom complet est obligatoire",
+      "emailInvalid": "Veuillez entrer une adresse email valide",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+      "passwordsNotMatch": "Les mots de passe ne correspondent pas",
+      "termsRequired": "Vous devez accepter les termes et conditions",
+      "emailAlreadyExists": "Cette adresse email est déjà utilisée",
+      "serverError": "Une erreur inattendue s'est produite. Veuillez réessayer.",
+      "networkError": "Erreur réseau. Veuillez vérifier votre connexion."
+    },
+    "validation": {
+      "emailInvalid": "Format d'email invalide",
+      "emailRequired": "L'email est obligatoire",
+      "passwordRequired": "Le mot de passe est obligatoire",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+      "passwordRequirements": "Le mot de passe doit contenir des majuscules, minuscules, chiffres et caractères spéciaux",
+      "nameRequired": "Le nom est obligatoire",
+      "nameTooShort": "Le nom doit contenir au moins 2 caractères",
+      "nameInvalid": "Le nom contient des caractères invalides"
+    }
+  },
+  "common": {
+    "required": "*",
+    "optional": "(optionnel)",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer"
+  }
+}

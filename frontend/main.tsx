@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import LoginComponent from './components/login-component'
 import './index.css'
+import './i18n' // Inizializza i18n
 
 // Abilita MSW in sviluppo
 async function enableMocking() {

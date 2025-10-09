@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "emailPlaceholder": "email@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "rememberMe": "Ricordami",
+      "forgotPassword": "Password dimenticata?",
+      "submit": "Accedi",
+      "loading": "Caricamento...",
+      "noAccount": "Non hai un account?",
+      "signupLink": "Registrati"
+    },
+    "signup": {
+      "title": "Registrazione",
+      "name": "Nome completo",
+      "namePlaceholder": "Mario Rossi",
+      "email": "Email",
+      "emailPlaceholder": "email@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "confirmPassword": "Conferma Password",
+      "confirmPasswordPlaceholder": "••••••••",
+      "acceptTerms": "Accetto i",
+      "termsLink": "termini e condizioni",
+      "submit": "Registrati",
+      "loading": "Caricamento...",
+      "hasAccount": "Hai già un account?",
+      "loginLink": "Accedi"
+    },
+    "oauth": {
+      "divider": "OPPURE",
+      "google": "Continua con Google",
+      "github": "Continua con GitHub"
+    },
+    "messages": {
+      "loginSuccess": "Login effettuato con successo!",
+      "signupSuccess": "Registrazione completata! Effettua il login.",
+      "invalidCredentials": "Email o password non validi",
+      "emailRequired": "L'email è obbligatoria",
+      "passwordRequired": "La password è obbligatoria",
+      "nameRequired": "Il nome completo è obbligatorio",
+      "emailInvalid": "Inserisci un indirizzo email valido",
+      "passwordTooShort": "La password deve contenere almeno 8 caratteri",
+      "passwordsNotMatch": "Le password non coincidono",
+      "termsRequired": "Devi accettare i termini e condizioni",
+      "emailAlreadyExists": "Questo indirizzo email è già in uso",
+      "serverError": "Si è verificato un errore imprevisto. Riprova più tardi.",
+      "networkError": "Errore di rete. Controlla la tua connessione."
+    },
+    "validation": {
+      "emailInvalid": "Formato email non valido",
+      "emailRequired": "L'email è obbligatoria",
+      "passwordRequired": "La password è obbligatoria",
+      "passwordTooShort": "La password deve contenere almeno 8 caratteri",
+      "passwordRequirements": "La password deve contenere maiuscole, minuscole, numeri e caratteri speciali",
+      "nameRequired": "Il nome è obbligatorio",
+      "nameTooShort": "Il nome deve contenere almeno 2 caratteri",
+      "nameInvalid": "Il nome contiene caratteri non validi"
+    }
+  },
+  "common": {
+    "required": "*",
+    "optional": "(opzionale)",
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "success": "Successo",
+    "cancel": "Annulla",
+    "confirm": "Conferma",
+    "save": "Salva",
+    "delete": "Elimina",
+    "edit": "Modifica",
+    "close": "Chiudi"
+  }
+}

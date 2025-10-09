@@ -1,11 +1,13 @@
-// Presentation Layer - Login Component (Refactored)
+// Presentation Layer - Login Component (Refactored with i18n)
 // Segue principi SOLID, DDD, Clean Architecture
 
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useAuth, useFormValidation } from './presentation/hooks/useAuth'
 import { LoginUseCase, SignupUseCase, OAuthLoginUseCase } from './application/use-cases'
 import { AuthService } from './infrastructure/auth-service'
 import { HttpClient } from './infrastructure/http-client'
+import LanguageSelector from './LanguageSelector'
 
 // Dependency Injection Container
 const httpClient = new HttpClient()
@@ -37,6 +39,7 @@ interface FormData {
  * - Clean Architecture
  */
 export default function LoginComponent() {
+    const { t } = useTranslation()
     const [isLogin, setIsLogin] = useState(true)
     const [formData, setFormData] = useState<FormData>({
         name: '',
@@ -101,11 +104,16 @@ export default function LoginComponent() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-base-200 p-4">
+            {/* Language Selector - Top Right */}
+            <div className="absolute top-4 right-4">
+                <LanguageSelector />
+            </div>
+
             <div className="card w-full max-w-md bg-base-100 shadow-xl">
                 <div className="card-body">
                     {/* Header */}
                     <h2 className="card-title text-3xl font-bold text-center justify-center mb-4">
-                        {isLogin ? 'Login' : 'Registrazione'}
+                        {isLogin ? t('auth.login.title') : t('auth.signup.title')}
                     </h2>
 
                     {/* Message Alert */}
@@ -125,13 +133,13 @@ export default function LoginComponent() {
                         {!isLogin && (
                             <div className="form-control">
                                 <label className="label" htmlFor="name">
-                                    <span className="label-text">Nome completo *</span>
+                                    <span className="label-text">{t('auth.signup.name')} {t('common.required')}</span>
                                 </label>
                                 <input
                                     id="name"
                                     name="name"
                                     type="text"
-                                    placeholder="Mario Rossi"
+                                    placeholder={t('auth.signup.namePlaceholder')}
                                     className={`input input-bordered w-full ${errors.name ? 'input-error' : ''}`}
                                     value={formData.name}
                                     onChange={handleInputChange}
@@ -153,13 +161,13 @@ export default function LoginComponent() {
                         {/* Email field */}
                         <div className="form-control">
                             <label className="label" htmlFor="email">
-                                <span className="label-text">Email *</span>
+                                <span className="label-text">{isLogin ? t('auth.login.email') : t('auth.signup.email')} {t('common.required')}</span>
                             </label>
                             <input
                                 id="email"
                                 name="email"
                                 type="email"
-                                placeholder="email@example.com"
+                                placeholder={isLogin ? t('auth.login.emailPlaceholder') : t('auth.signup.emailPlaceholder')}
                                 className={`input input-bordered w-full ${errors.email ? 'input-error' : ''}`}
                                 value={formData.email}
                                 onChange={handleInputChange}
@@ -182,13 +190,13 @@ export default function LoginComponent() {
                         {/* Password field */}
                         <div className="form-control">
                             <label className="label" htmlFor="password">
-                                <span className="label-text">Password *</span>
+                                <span className="label-text">{isLogin ? t('auth.login.password') : t('auth.signup.password')} {t('common.required')}</span>
                             </label>
                             <input
                                 id="password"
                                 name="password"
                                 type="password"
-                                placeholder="••••••••"
+                                placeholder={isLogin ? t('auth.login.passwordPlaceholder') : t('auth.signup.passwordPlaceholder')}
                                 className={`input input-bordered w-full ${errors.password ? 'input-error' : ''}`}
                                 value={formData.password}
                                 onChange={handleInputChange}
@@ -209,7 +217,7 @@ export default function LoginComponent() {
                             {isLogin && (
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">
-                                        Password dimenticata?
+                                        {t('auth.login.forgotPassword')}
                                     </a>
                                 </label>
                             )}
@@ -219,13 +227,13 @@ export default function LoginComponent() {
                         {!isLogin && (
                             <div className="form-control">
                                 <label className="label" htmlFor="confirmPassword">
-                                    <span className="label-text">Conferma Password *</span>
+                                    <span className="label-text">{t('auth.signup.confirmPassword')} {t('common.required')}</span>
                                 </label>
                                 <input
                                     id="confirmPassword"
                                     name="confirmPassword"
                                     type="password"
-                                    placeholder="••••••••"
+                                    placeholder={t('auth.signup.confirmPasswordPlaceholder')}
                                     className="input input-bordered w-full"
                                     value={formData.confirmPassword}
                                     onChange={handleInputChange}
@@ -248,7 +256,7 @@ export default function LoginComponent() {
                                         onChange={handleInputChange}
                                         disabled={loading}
                                     />
-                                    <span className="label-text">Ricordami</span>
+                                    <span className="label-text">{t('auth.login.rememberMe')}</span>
                                 </label>
                             </div>
                         )}
@@ -268,9 +276,9 @@ export default function LoginComponent() {
                                         aria-required={!isLogin}
                                     />
                                     <span className="label-text">
-                                        Accetto i{' '}
+                                        {t('auth.signup.acceptTerms')}{' '}
                                         <a href="#" className="link link-primary">
-                                            termini e condizioni
+                                            {t('auth.signup.termsLink')}
                                         </a>
                                     </span>
                                 </label>
@@ -285,13 +293,16 @@ export default function LoginComponent() {
                                 disabled={loading}
                                 aria-busy={loading}
                             >
-                                {loading ? 'Caricamento...' : isLogin ? 'Accedi' : 'Registrati'}
+                                {loading 
+                                    ? (isLogin ? t('auth.login.loading') : t('auth.signup.loading'))
+                                    : (isLogin ? t('auth.login.submit') : t('auth.signup.submit'))
+                                }
                             </button>
                         </div>
                     </form>
 
                     {/* Divider */}
-                    <div className="divider">OPPURE</div>
+                    <div className="divider">{t('auth.oauth.divider')}</div>
 
                     {/* OAuth buttons */}
                     <div className="space-y-2">
@@ -299,7 +310,7 @@ export default function LoginComponent() {
                             onClick={() => loginWithOAuth('google')}
                             className="btn btn-outline w-full gap-2"
                             disabled={loading}
-                            aria-label="Continua con Google"
+                            aria-label={t('auth.oauth.google')}
                         >
                             <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
@@ -319,33 +330,33 @@ export default function LoginComponent() {
                                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                                 />
                             </svg>
-                            Continua con Google
+                            {t('auth.oauth.google')}
                         </button>
 
                         <button
                             onClick={() => loginWithOAuth('github')}
                             className="btn btn-outline w-full gap-2"
                             disabled={loading}
-                            aria-label="Continua con GitHub"
+                            aria-label={t('auth.oauth.github')}
                         >
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                             </svg>
-                            Continua con GitHub
+                            {t('auth.oauth.github')}
                         </button>
                     </div>
 
                     {/* Toggle login/signup */}
                     <div className="text-center mt-4">
                         <p className="text-sm">
-                            {isLogin ? 'Non hai un account?' : 'Hai già un account?'}
+                            {isLogin ? t('auth.login.noAccount') : t('auth.signup.hasAccount')}
                             <button
                                 onClick={toggleMode}
                                 className="link link-primary ml-1"
                                 type="button"
                                 disabled={loading}
                             >
-                                {isLogin ? 'Registrati' : 'Accedi'}
+                                {isLogin ? t('auth.login.signupLink') : t('auth.signup.loginLink')}
                             </button>
                         </p>
                     </div>
