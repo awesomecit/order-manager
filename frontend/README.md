@@ -33,10 +33,18 @@ Il componente sarà disponibile su **http://localhost:3001**
 
 ## 🎯 Testing
 
-### Sviluppo locale
+### Sviluppo locale con MSW (Mock API)
 ```bash
 npm run dev
 ```
+
+**MSW (Mock Service Worker)** è abilitato di default in sviluppo. Intercetta le chiamate API e restituisce dati mock.
+
+**Credenziali di test:**
+- Admin: `admin@example.com` / `Admin123!`
+- User: `user@example.com` / `User123!`
+
+📖 **Guida completa MSW:** [MSW_GUIDE.md](./MSW_GUIDE.md)
 
 ### Build per produzione
 ```bash

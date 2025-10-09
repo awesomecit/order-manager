@@ -16,4 +16,4 @@ export type { RequestOptions } from './infrastructure/http-client'
 
 // Presentation Layer
 export { useAuth, useFormValidation } from './presentation/hooks/useAuth'
-export { default as LoginComponent } from './login-component-refactored'
+export { default as LoginComponent } from './login-component'
