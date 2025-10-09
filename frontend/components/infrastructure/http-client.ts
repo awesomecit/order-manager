@@ -9,9 +9,11 @@ export class HttpClient {
     private defaultHeaders: Record<string, string>
     private requestInterceptors: RequestInterceptor[] = []
     private responseInterceptors: ResponseInterceptor[] = []
+    private defaultRetry: number
 
-    constructor(baseUrl: string = '') {
+    constructor(baseUrl: string = '', defaultRetry: number = 3) {
         this.baseUrl = baseUrl
+        this.defaultRetry = defaultRetry
         this.defaultHeaders = {
             'Content-Type': 'application/json',
         }
@@ -74,11 +76,12 @@ export class HttpClient {
             config = await interceptor(config)
         }
 
-        // Retry logic
-        const maxRetries = options?.retry ?? 3
+        // Retry logic - at least 1 attempt, then retry based on config
+        const maxRetries = options?.retry ?? this.defaultRetry
+        const totalAttempts = Math.max(1, maxRetries + 1) // +1 because first attempt is not a retry
         let lastError: Error | null = null
 
-        for (let attempt = 0; attempt < maxRetries; attempt++) {
+        for (let attempt = 0; attempt < totalAttempts; attempt++) {
             try {
                 const response = await fetch(fullUrl, config)
 
@@ -112,8 +115,8 @@ export class HttpClient {
                     throw error
                 }
 
-                // Exponential backoff
-                if (attempt < maxRetries - 1) {
+                // Exponential backoff (only if we have more attempts left)
+                if (attempt < totalAttempts - 1) {
                     await this.delay(Math.pow(2, attempt) * 1000)
                 }
             }
